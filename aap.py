@@ -50,7 +50,6 @@ if uploaded_file is not None:
     image = Image.open(uploaded_file)
     st.image(image, caption='Uploaded Image', use_column_width=True)
 
-    # Process the image
     try:
         # Convert to grayscale and resize to 8x8
         img_gray = image.convert('L')
@@ -81,8 +80,10 @@ if uploaded_file is not None:
             # Fallback: simple threshold-based recognition
             st.write("## Using fallback recognition")
             # Simple heuristic based on pixel intensity
+            digit_guess = np.argmax(np.sum(img_array.reshape(8, 8), axis=0)) % 10
+            st.write(f"Estimated digit: **{digit_guess}**")
 
-            except Exception as e:
+    except Exception as e:
         st.error(f"Error processing image: {e}")
 
 # Instructions
